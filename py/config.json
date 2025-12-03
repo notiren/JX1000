@@ -1,0 +1,110 @@
+{
+  "modbus": {
+    "port": "COM6",
+    "baudrate": 9600,
+    "bytesize": 8,
+    "parity": "N",
+    "stopbits": 1,
+    "timeout": 1,
+    "target": 1
+  },
+
+  "read_registers": [
+    {
+      "name": "Voltage_A",
+      "address": 1100,
+      "type": "float",
+      "wordorder": "big",
+      "units": "V",
+      "access": "R",
+      "description": "Input voltage"
+    },
+    {
+      "name": "Voltage_B",
+      "address": 1103,
+      "type": "float",
+      "wordorder": "big",
+      "units": "V",
+      "access": "R",
+      "description": "Input voltage"
+    },
+    {
+      "name": "Voltage_C",
+      "address": 1104,
+      "type": "float",
+      "wordorder": "big",
+      "units": "V",
+      "access": "R",
+      "description": "Input voltage"
+    },
+    {
+      "name": "Test_Result",
+      "address": 23,
+      "type": "int",
+      "access": "R",
+      "result_map": {
+        "0": "Not tested",
+        "1": "PASS",
+        "2": "NG"
+      }
+    }
+  ],
+
+  "write_registers": [
+    {
+      "name": "Output_1",
+      "type": "int",
+      "access": "W",
+      "allowed_values": [0, 1],
+      "description": "Enable/disable output with 1 or 0",
+      "write_actions": {
+        "1": [
+          { "address": 120, "value": 1 },
+          { "address": 121, "value": 0 }
+        ],
+        "0": [
+          { "address": 120, "value": 0 },
+          { "address": 121, "value": 1 }
+        ]
+      }
+    },
+    {
+      "name": "Output_2",
+      "type": "int",
+      "access": "W",
+      "allowed_values": [0, 1],
+      "description": "Enable/disable output with 1 or 0",
+      "write_actions": {
+        "1": [
+          { "address": 130, "value": 1 },
+          { "address": 131, "value": 0 }
+        ],
+        "0": [
+          { "address": 130, "value": 0 },
+          { "address": 131, "value": 1 }
+        ]
+      }
+    },
+    {
+      "name": "Start_Test",
+      "address": 20,
+      "type": "int",
+      "access": "W",
+      "allowed_values": [0, 1],
+      "description": "Write 1 to trigger test"
+    }
+  ],
+
+  "test_sequence": [
+    {
+      "trigger_register": 20,
+      "trigger_value": 1,
+      "result_register": 23,
+      "result_map": {
+        "0": "Not tested",
+        "1": "PASS",
+        "2": "NG"
+      }
+    }
+  ]
+}
