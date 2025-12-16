@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 
-repo_root = Path(__file__).resolve().parents[1]  # points to jx1000_python/
+repo_root = Path(__file__).resolve().parents[1]  # points to python_sdk/
 sys.path.insert(0, str(repo_root))
 
 from jx1000.api import JX1000
