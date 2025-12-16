@@ -3,7 +3,7 @@ import serial
 import time
 import binascii
 
-# Configure COM11
+# Configure COM port
 PORT = "COM11"
 BAUD = 9600  # Adjust to match your device settings
 TIMEOUT = 0.1  # Non-blocking read

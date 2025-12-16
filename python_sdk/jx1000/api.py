@@ -1,5 +1,5 @@
 from typing import Optional, Callable
-from jx1000_driver import JX1000Driver, EFRAME
+from jx1000.driver import JX1000Driver, EFRAME
 
 
 class JX1000:

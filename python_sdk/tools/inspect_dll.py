@@ -2,8 +2,10 @@ import clr
 import sys
 import System
 from System.Reflection import Assembly
+from pathlib import Path
 
-dll_path = r"C:\Users\NeritonPaçarizi\Documents\Scripts\JX1000_modbus\DLL\JX1000API.dll"
+ROOT = Path(__file__).resolve().parents[2]
+dll_path = str(ROOT / "binaries" / "JX1000API.dll")
 asm = Assembly.LoadFile(dll_path)
 
 print("Loaded:", asm.FullName)
@@ -11,7 +13,6 @@ print("\n=== DLL CONTENTS ===")
 
 for type_ in asm.GetTypes():
     print(type_.FullName)
-    
     
 clr.AddReference(dll_path)
 import JX1000

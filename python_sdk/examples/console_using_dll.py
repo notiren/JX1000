@@ -24,8 +24,10 @@ import clr
 import queue
 import threading
 from System import Single
+from pathlib import Path
 
-DLL_PATH = r"C:\Users\NeritonPaçarizi\Documents\Scripts\JX1000_test\dll\JX1000API.dll"
+ROOT = Path(__file__).resolve().parents[2]
+DLL_PATH = str(ROOT / "binaries" / "JX1000API.dll")
 clr.AddReference(DLL_PATH)
 
 from JX1000 import JX1000_API, EVENT_CODE

@@ -1,0 +1,4 @@
+clr_loader==0.2.8
+pymodbus==3.11.3
+pythonnet==3.0.5
+pyserial==3.5
