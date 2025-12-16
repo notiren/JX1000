@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36717.8
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JX1000API", "..\src\JX1000API\JX1000API.csproj", "{C7469A00-EFFA-F93A-03E3-55FBB55C80E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APITest", "..\examples\APITest\APITest.csproj", "{717D442B-D9D1-4AAC-A816-C9EAA52B4111}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTest", "..\examples\ConsoleTest\ConsoleTest.csproj", "{E9852296-242E-4533-9818-DEB958C952A3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C7469A00-EFFA-F93A-03E3-55FBB55C80E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7469A00-EFFA-F93A-03E3-55FBB55C80E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7469A00-EFFA-F93A-03E3-55FBB55C80E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7469A00-EFFA-F93A-03E3-55FBB55C80E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{717D442B-D9D1-4AAC-A816-C9EAA52B4111}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{717D442B-D9D1-4AAC-A816-C9EAA52B4111}.Debug|Any CPU.Build.0 = Debug|x86
+		{717D442B-D9D1-4AAC-A816-C9EAA52B4111}.Release|Any CPU.ActiveCfg = Release|x86
+		{717D442B-D9D1-4AAC-A816-C9EAA52B4111}.Release|Any CPU.Build.0 = Release|x86
+		{E9852296-242E-4533-9818-DEB958C952A3}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{E9852296-242E-4533-9818-DEB958C952A3}.Debug|Any CPU.Build.0 = Debug|x86
+		{E9852296-242E-4533-9818-DEB958C952A3}.Release|Any CPU.ActiveCfg = Release|x86
+		{E9852296-242E-4533-9818-DEB958C952A3}.Release|Any CPU.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4A06F7C2-4010-4F21-8939-392CB0D89480}
+	EndGlobalSection
+EndGlobal
