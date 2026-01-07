@@ -7,8 +7,9 @@ from pymodbus.client import ModbusSerialClient
 from pymodbus.exceptions import ModbusException, ModbusIOException
 import struct
 
+
 class ModbusHelper:
-    
+
     def __init__(self, client: ModbusSerialClient):
         """Initialize with an active pymodbus client"""
         self.client = client
@@ -35,15 +36,20 @@ class ModbusHelper:
     # ------------------------
     def read_single_register(self, start, count=1):
         """Read N consecutive registers starting at 'start'."""
-        result, err = self._safe_call(self.client.read_holding_registers, start, count)
+        result, err = self._safe_call(
+            self.client.read_holding_registers,
+            address=start,
+            count=count,
+        )
         if result is not None:
             return result.registers, None
         return None, err
 
-    def read_mapped_pair(self, start, num_pairs):
+    def read_mapped_pair(self, start, num_pairs=1):
         """Read mapped register pairs (1000-1499)."""
         if not (1000 <= start <= 1499):
             return None, "Mapped read requires 1000-1499 input"
+
         max_last = start + num_pairs - 1
         if max_last > 1499:
             return None, "Requested range exceeds 1499"
@@ -51,14 +57,22 @@ class ModbusHelper:
         results = []
         for src in range(start, start + num_pairs):
             base = 1000 + (src - 1000) * 2
-            regs, err = self._safe_call(self.client.read_holding_registers, base, 2)
+
+            regs, err = self._safe_call(
+                self.client.read_holding_registers,
+                address=base,
+                count=2,
+            )
+
             if err:
                 return None, f"Error reading mapped pair at {src}: {err}"
+
             results.append({
                 "input_target": src,
                 "mapped_registers": [base, base + 1],
                 "values": regs.registers
             })
+
         return results, None
 
     # ------------------------
@@ -66,7 +80,11 @@ class ModbusHelper:
     # ------------------------
     def write_register(self, address, value):
         """Write a single holding register."""
-        result, err = self._safe_call(self.client.write_register, address, value)
+        result, err = self._safe_call(
+            self.client.write_register,
+            address=address,
+            value=value,
+        )
         if result is not None:
             return True, None
         return None, err
