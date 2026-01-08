@@ -120,11 +120,11 @@ class ModbusHelper:
         bytesize=8,
         parity="N",
         stopbits=1,
-        timeout=0.05,
+        timeout=1,
         test_register=1000,
     ) -> List[str]:
         valid_ports = []
-
+        
         for port in list_ports.comports():
             client = None
             try:
@@ -139,6 +139,8 @@ class ModbusHelper:
 
                 if not client.connect():
                     continue
+                
+                time.sleep(0.05)
 
                 # simple probe to verify connection
                 result = client.read_holding_registers(
@@ -166,34 +168,38 @@ class ModbusHelper:
         bytesize=8,
         parity="N",
         stopbits=1,
-        timeout=0.05,
+        timeout=1,
         test_register=1000,
     ) -> Tuple[Optional["ModbusHelper"], Optional[str]]:
 
-        ports = ModbusHelper.probe_modbus_ports(
-            baudrate=baudrate,
-            bytesize=bytesize,
-            parity=parity,
-            stopbits=stopbits,
-            timeout=timeout,
-            test_register=test_register,
-        )
+        ports = [p.device for p in list_ports.comports()]
 
-        if not ports:
-            return None, None
+        for port in ports:
+            client = ModbusSerialClient(
+                port=port,
+                baudrate=baudrate,
+                bytesize=bytesize,
+                parity=parity,
+                stopbits=stopbits,
+                timeout=timeout,
+            )
 
-        port = ports[0]
-        client = ModbusSerialClient(
-            port=port,
-            baudrate=baudrate,
-            bytesize=bytesize,
-            parity=parity,
-            stopbits=stopbits,
-            timeout=timeout,
-        )
+            try:
+                if not client.connect():
+                    continue
+                try:
+                    result = client.read_holding_registers(address=test_register, count=1)
+                    if result is None or result.isError():
+                        client.close()
+                        continue
+                except Exception:
+                    client.close()
+                    continue
+                return ModbusHelper(client, port=port), port
 
-        if client.connect():
-            modbus_helper = ModbusHelper(client, port=port)
-            return modbus_helper, port
-        else:
-            return None, None
+            except Exception:
+                if client:
+                    client.close()
+                continue
+            
+        return None, None
