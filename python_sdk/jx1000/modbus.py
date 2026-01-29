@@ -90,16 +90,38 @@ class ModbusHelper:
     # ------------------------
     # WRITE FUNCTIONS
     # ------------------------
-    def write_register(self, address, value):
+    def write_register(self, address, value, pair_address=None):
+        """
+        Write a value to a register. Optionally, write the opposite value to a paired register.
+        
+        address      : int -> main register
+        value        : int -> 0 or 1
+        pair_address : int -> optional paired register that will receive the opposite value
+        """
+        if value not in (0, 1):
+            raise ValueError("Value must be 0 or 1")
+
+        # Write main register
         result, err = self._safe_call(
             self.client.write_register,
             address=address,
-            value=value,
+            value=value
         )
-        if result is not None:
-            return True, None
-        return None, err
+        if result is None:
+            return None, err
 
+        # If pair_address provided, write opposite value
+        if pair_address is not None:
+            pair_result, pair_err = self._safe_call(
+                self.client.write_register,
+                address=pair_address,
+                value=1 - value
+            )
+            if pair_result is None:
+                return None, f"Failed writing pair register {pair_address}: {pair_err}"
+
+        return True, None
+    
     # ------------------------
     # UTILITY
     # ------------------------
