@@ -16,7 +16,7 @@ from jx1000.modbus import ModbusHelper
 
 def main():
     # Load config
-    with open(repo_root / "jx1000" / "config.json", "r") as f:
+    with open("config.json", "r") as f:
         config = json.load(f)["modbus"]
 
     # Initialize Modbus client
@@ -37,7 +37,7 @@ def main():
     modbus = ModbusHelper(client)
     print("--Connected to Modbus device--")
 
-    choice = input("Choose: 1) Read 2) Read mapped 3) Write 4) Test: ").strip()
+    choice = input("Choose: \n1) Read \n2) Read mapped \n3) Write \n4) Test: ").strip()
 
     if choice == "1":
         start = int(input("Enter register address: "))
